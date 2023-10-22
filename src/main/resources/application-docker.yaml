@@ -12,3 +12,7 @@ mns:
   demo:
     document:
       path: ${DOCUMENT_PATH}
+      upload:
+        buffer-size: ${UPLOAD_BUFFER_SIZE}
+      download:
+        buffer-size: ${DOWNLOAD_BUFFER_SIZE}

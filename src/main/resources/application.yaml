@@ -15,4 +15,6 @@ mns:
     document:
       path: D:\project\mns\demo\document_download_upload\download
       upload:
-        size-byte: 8192
+        buffer-size: 8192
+      download:
+        buffer-size: 8192

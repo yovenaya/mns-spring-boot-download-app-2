@@ -18,3 +18,5 @@ mns:
         buffer-size: 8192
       download:
         buffer-size: 8192
+      security:
+        jwt-secret: 432ae535-3d97-486c-b6c6-3811054536f4

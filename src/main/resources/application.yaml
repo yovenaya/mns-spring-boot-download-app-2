@@ -3,7 +3,16 @@ server:
   servlet:
     context-path: /app2
 
+spring:
+  servlet:
+    multipart:
+      enabled: false
+      max-request-size: 4GB
+      max-file-size: 4GB
+
 mns:
   demo:
     document:
       path: D:\project\mns\demo\document_download_upload\download
+      upload:
+        size-byte: 8192

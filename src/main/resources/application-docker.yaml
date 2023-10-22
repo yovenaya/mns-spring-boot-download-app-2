@@ -1,6 +1,13 @@
 server:
   port: 8080
 
+spring:
+  servlet:
+    multipart:
+      enabled: ${MULTIPART_ENABLED}
+      max-request-size: 4GB
+      max-file-size: 4GB
+
 mns:
   demo:
     document:

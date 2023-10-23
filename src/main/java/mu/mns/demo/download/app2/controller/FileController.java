@@ -5,6 +5,7 @@ import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -105,6 +106,23 @@ public class FileController {
         }
 
         log.info("[Without MultipartFile] " + filename + " saved successfully to disk in the directory " + path);
+    }
+
+    @PostMapping(value = "/upload/stream")
+    public void uploadStream(@RequestHeader HttpHeaders httpHeaders, @RequestBody InputStreamResource inputStreamResource) {
+
+        String filename = httpHeaders.getFirst("filename");
+
+        try (InputStream inputStream = inputStreamResource.getInputStream();
+             BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(path + File.separator + filename))) {
+            byte[] buffer = new byte[uploadBufferSizeByte];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**

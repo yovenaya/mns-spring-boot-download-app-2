@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
@@ -61,10 +60,10 @@ public class FileController {
      * <p>
      * Set the property <b>spring.servlet.multipart.enabled=true</b> before calling this endpoint.
      *
-     * @param file The file to be uploaded.
+     * @param file File to be uploaded.
      */
     @PostMapping("/upload/with_multipart_file")
-    public void uploadMultiPartFile(@RequestParam MultipartFile file) {
+    public void uploadMultiPartFile(@RequestParam("file") MultipartFile file) {
         log.info("[Multipart] Saving the file " + file.getOriginalFilename() + " to disk in the directory " + path);
 
         try (InputStream inputStream = file.getInputStream();
@@ -88,7 +87,7 @@ public class FileController {
      *
      * @param request {@link HttpServletRequest}
      */
-    @PostMapping("/upload/without_multipart_file")
+    @PostMapping(value = "/upload/without_multipart_file")
     public void uploadWithoutMultiPartFile(HttpServletRequest request) {
 
         String filename = request.getHeader("filename");
@@ -105,7 +104,7 @@ public class FileController {
             throw new RuntimeException(e);
         }
 
-        log.info("[Without MultipartFile]" + filename + " saved successfully to disk in the directory " + path);
+        log.info("[Without MultipartFile] " + filename + " saved successfully to disk in the directory " + path);
     }
 
     /**
@@ -180,7 +179,7 @@ public class FileController {
     /**
      * REST Endpoint to download a file from disk if the provided download token is valid.
      *
-     * @param filename The file to be downloaded (include extension).
+     * @param filename      The file to be downloaded (include extension).
      * @param downloadToken The download JWT token.
      * @return {@link ResponseEntity} of {@link StreamingResponseBody}.
      */

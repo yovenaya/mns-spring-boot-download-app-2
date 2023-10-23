@@ -6,7 +6,7 @@ server:
 spring:
   servlet:
     multipart:
-      enabled: false
+      enabled: true
       max-request-size: 4GB
       max-file-size: 4GB
 
